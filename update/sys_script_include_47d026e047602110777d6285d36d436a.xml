@@ -9,20 +9,20 @@
         <name>NeedItUtils</name>
         <script><![CDATA[var NeedItUtils = Class.create();
 NeedItUtils.prototype = {
-	initialzie: function(){	
+	initialize: function(strDate){	
+    this.rightnow = new GlideDateTime();
+    this.testdate = new GlideDateTime(strDate);
 	},
 	isDatePast: function(strDate){
+    this.testdate = new GlideDateTime(strDate);
     // Create GlideDateTime objects for the current date and the passed in date
-    var rightnow = new GlideDateTime();
-    var testdate = new GlideDateTime(strDate);
-    
     // If the testdate is before rightnow, return true, else return false
-    if (testdate.before(rightnow)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return this.testdate.before(this.rightnow);
+  },
+  isDateToday: function(strDate){
+    this.testdate = new GlideDateTime(strDate);
+    var today = this.rightnow.getDate();
+    return today.equals(this.testdate.getDate());
   },
 	type: 'NeedItUtils'
 };]]></script>

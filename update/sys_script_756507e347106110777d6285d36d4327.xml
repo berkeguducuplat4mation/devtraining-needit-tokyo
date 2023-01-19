@@ -28,30 +28,23 @@
         <rest_variables/>
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+	var niutils = new NeedItUtils();
+	var isPast = niutils.isDatePast(current.u_when_needed);
+	var isToday = niutils.isDateToday(current.u_when_needed);
 
-	// Add your code here
-	// rightnow stores the current time
-	var rightnow = new GlideDateTime();
-	// Create a GlideDateTime object for the When needed date
-	var whenNeeded = new GlideDateTime(current.u_when_needed);
-	gs.info(whenNeeded.toString());
-
-
-	var startOfToday = new GlideDateTime(gs.daysAgoStart(0));
-	var endOfToday = new GlideDateTime(gs.daysAgoStart(-1));
-
-	// // // Output an error message to the screen
-	// if (rightnow.getLocalDate().compareTo(whenNeeded.getLocalDate()) == 0) {
-	// 	abort("Can't order the same day");
-	// }
-
-	// If the When needed date is before rightnow, do not write the record to the database
-	if (whenNeeded.before(rightnow)) {
-		abort("When needed date cannot be in the past." + whenNeeded.date.toString() + "is in the past.\n  " + "\n" +
-			"  Date is: " + rightnow.toString() + "<br> Your request has not been saved to the database.");
+	// If the isDatePast method returns true, the date is in the past.
+	if (isPast) {
+		gs.addErrorMessage("When needed date cannot be in the past.  Your request has not been saved to the database.");
+		current.setAbortAction(true);
 	}
-	// line break works with html and not js
-	// https://stackoverflow.com/questions/54411085/why-n-is-not-working-with-servicenow-script-new-lines-not-being-created
+	if(isToday){
+		gs.addErrorMessage("When needed date cannot be today. Your request has not been saved to the database.");
+		current.setAbortAction(true);
+	}else{
+		gs.addErrorMessage(rightnow.getDate());
+		current.setAbortAction(true);
+
+	}
 
 })(current, previous);
 
