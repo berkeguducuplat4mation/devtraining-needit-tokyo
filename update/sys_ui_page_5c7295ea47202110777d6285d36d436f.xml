@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>My First Jelly Page</description>
+        <direct>false</direct>
+        <endpoint>x_58872_needit_jello_world.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:evaluate>
+		var words = ['Hello', 'Jelly', 'World'];
+	</g:evaluate>
+	<!-- java jexl -->
+	<!-- jexl can see js variables 	 -->
+	<!-- js makes a copy of jelly variables, jelly -> js -> jxl, jelly -> jxl --> jelly
+	<j:forEach var="jvar_word" items="${words}">
+		<p> ${jvar_word} </p>
+	</j:forEach>
+	<g2:evaluate>
+		var inc = new GlideRecord('problem');
+		inc.query();
+	</g2:evaluate>
+	<j2:while test="$[inc.next()]">
+		<b>$[inc.getValue('number')]</b>
+	</j2:while>
+</j:jelly>]]></html>
+        <name>jello_world</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-01-25 09:04:50</sys_created_on>
+        <sys_id>5c7295ea47202110777d6285d36d436f</sys_id>
+        <sys_name>jello_world</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ui_page_5c7295ea47202110777d6285d36d436f</sys_update_name>
+    </sys_ui_page>
+</record_update>
